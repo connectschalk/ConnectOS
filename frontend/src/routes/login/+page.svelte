@@ -285,14 +285,7 @@
 		color: #f5f5f5;
 	}
 
-	.auth-logo-suffix {
-		color: rgba(0, 0, 0, 0.3);
-		font-weight: 300;
-	}
 
-	:global(.dark) .auth-logo-suffix {
-		color: rgba(255, 255, 255, 0.3);
-	}
 
 	/* ---- Header ---- */
 	.auth-header {
