@@ -42,7 +42,7 @@
 
 	let showCreate = $state(false);
 	let creating = $state(false);
-	let form = $state({ title: '', description: '', priority: 'medium' as Priority, due_date: '', assignee_id: '' });
+	let form = $state({ title: '', description: '', priority: 'medium' as Priority, due_date: '', assignee_id: '', project_id: '', status: 'todo' as Status });
 
 	// Reload when workspace changes
 	let wsId = $state<string | null | undefined>(null);
@@ -138,13 +138,25 @@
 				description: form.description.trim() || undefined,
 				priority: form.priority,
 				due_date: form.due_date || undefined,
-				assignee_id: form.assignee_id || undefined
+				assignee_id: form.assignee_id || undefined,
+				project_id: form.project_id || undefined,
+				status: form.status
 			});
 			tasks = [created, ...tasks];
 			showCreate = false;
-			form = { title: '', description: '', priority: 'medium', due_date: '', assignee_id: '' };
+			form = { title: '', description: '', priority: 'medium', due_date: '', assignee_id: '', project_id: '', status: 'todo' as Status };
 		} catch (e) { error = e instanceof Error ? e.message : 'Failed to create task'; }
 		finally { creating = false; }
+	}
+
+	async function linkProject(t: Task, projectId: string) {
+		if (!projectId) return;
+		busyId = t.id; error = null;
+		try {
+			await api.updateTask(t.id, { project_id: projectId });
+			tasks = tasks.map(x => x.id === t.id ? { ...x, project_id: projectId } : x);
+		} catch (e) { error = e instanceof Error ? e.message : 'Failed to link project'; }
+		finally { busyId = null; }
 	}
 
 	async function setStatus(t: Task, status: Status) {
@@ -182,7 +194,7 @@
 				<button class:active={view === 'board'} onclick={() => (view = 'board')} aria-label="Board view"><LayoutGrid size={16} /></button>
 				<button class:active={view === 'list'} onclick={() => (view = 'list')} aria-label="List view"><List size={16} /></button>
 			</div>
-			<button class="btn btn--primary" onclick={() => (showCreate = true)}><Plus size={16} strokeWidth={2.4} />New task</button>
+			<button class="btn btn--primary" onclick={() => { form.project_id = projectFilter === 'all' ? '' : projectFilter; showCreate = true; }}><Plus size={16} strokeWidth={2.4} />New task</button>
 		</div>
 	</header>
 
@@ -202,7 +214,7 @@
 		<div class="loading"><Loader2 class="spin" size={20} /> Loading tasks…</div>
 	{:else if tasks.length === 0}
 		<div class="empty"><CheckCircle2 size={26} strokeWidth={1.4} /><p>No tasks yet.</p>
-			<button class="btn btn--primary" onclick={() => (showCreate = true)}><Plus size={16} />Create your first task</button>
+			<button class="btn btn--primary" onclick={() => { form.project_id = projectFilter === 'all' ? '' : projectFilter; showCreate = true; }}><Plus size={16} />Create your first task</button>
 		</div>
 	{:else if visible.length === 0}
 		<div class="empty"><CheckCircle2 size={26} strokeWidth={1.4} />
@@ -242,6 +254,7 @@
 									<button class="card-x" title="Delete" onclick={() => remove(t)} disabled={busyId === t.id}><Trash2 size={13} /></button>
 								</div>
 								{#if t.description}<p class="card-desc">{t.description}</p>{/if}
+								<label class="field"><span>Project</span><select aria-label={`Project for ${t.title}`} value={t.project_id ?? ''} disabled={busyId === t.id} onchange={(e) => linkProject(t, e.currentTarget.value)}><option value="" disabled>No project</option>{#each projects as p (p.id)}<option value={p.id}>{p.name}</option>{/each}</select></label>
 								{#if t.due_date || assigneeName(t)}
 									<div class="card-meta">
 										{#if t.due_date}<span class="chip" class:due-over={isOverdue(t)}><Calendar size={11} />{fmtDate(t.due_date)}</span>{/if}
@@ -290,6 +303,10 @@
 			<form onsubmit={create}>
 				<label class="field"><span>Title</span><input bind:value={form.title} placeholder="What needs to happen?" required /></label>
 				<label class="field"><span>Description</span><textarea rows="2" bind:value={form.description} placeholder="Details (optional)"></textarea></label>
+				<label class="field"><span>Project</span>
+					<select bind:value={form.project_id}><option value="">No project</option>{#each projects as p (p.id)}<option value={p.id}>{p.name}</option>{/each}</select>
+				</label>
+				<label class="field"><span>Status</span><select bind:value={form.status}>{#each STATUSES as s}<option value={s.id}>{s.label}</option>{/each}</select></label>
 				<div class="field-row">
 					<label class="field"><span>Priority</span>
 						<select bind:value={form.priority}><option value="critical">Critical</option><option value="high">High</option><option value="medium">Medium</option><option value="low">Low</option></select>

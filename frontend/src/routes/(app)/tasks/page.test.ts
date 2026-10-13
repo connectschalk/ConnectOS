@@ -1,0 +1,28 @@
+import { render, screen, fireEvent, waitFor, cleanup } from '@testing-library/svelte';
+import { writable } from 'svelte/store';
+import { afterEach, expect, it, vi } from 'vitest';
+vi.mock('$lib/api', () => ({ api: { getTasks: vi.fn(), getProjects: vi.fn(), getTeamMembers: vi.fn(), createTask: vi.fn(), updateTask: vi.fn() } }));
+vi.mock('$lib/stores/workspaces', () => ({ currentWorkspace: writable({ id: 'company' }) }));
+vi.mock('$lib/auth-client', () => ({ useSession: () => writable({ data: { user: { email: 'owner@example.test' } } }) }));
+import { api } from '$lib/api';
+import Page from './+page.svelte';
+afterEach(cleanup);
+it('creates a task linked to its project and displays it after returning to Tasks', async () => {
+ const saved = { id: 'task', title: 'Choose date', status: 'in_progress', priority: 'medium', project_id: 'workshop', description: null, assignee_id: null, due_date: null };
+ vi.mocked(api.getTasks).mockResolvedValue([]);
+ vi.mocked(api.getProjects).mockResolvedValue([{ id: 'workshop', name: 'AI Workshop' }] as never);
+ vi.mocked(api.getTeamMembers).mockResolvedValue([]);
+ vi.mocked(api.createTask).mockResolvedValue(saved as never);
+ const view = render(Page);
+ await screen.findByRole('button', { name: 'New task' });
+ await waitFor(() => expect(api.getProjects).toHaveBeenCalled());
+ await fireEvent.click(screen.getByRole('button', { name: 'New task' }));
+ await fireEvent.input(screen.getByLabelText('Title'), { target: { value: 'Choose date' } });
+ await fireEvent.change(screen.getByLabelText('Project'), { target: { value: 'workshop' } });
+ await fireEvent.change(screen.getByLabelText('Status'), { target: { value: 'in_progress' } });
+ await fireEvent.click(screen.getByRole('button', { name: 'Create task' }));
+ await waitFor(() => expect(api.createTask).toHaveBeenCalledWith(expect.objectContaining({ title: 'Choose date', project_id: 'workshop', status: 'in_progress' })));
+ view.unmount();vi.mocked(api.getTasks).mockResolvedValue([saved] as never);render(Page);
+ expect(await screen.findByText('Choose date')).toBeTruthy();
+ await waitFor(() => expect((screen.getByLabelText('Project for Choose date') as HTMLSelectElement).value).toBe('workshop'));
+});

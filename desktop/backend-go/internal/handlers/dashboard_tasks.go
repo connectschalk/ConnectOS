@@ -168,10 +168,17 @@ func (h *DashboardItemHandler) CreateTask(c *gin.Context) {
 		return
 	}
 
-	queries := sqlc.New(h.pool)
+	workspaceID, workspaceScoped := h.taskWorkspaceScope(c, user.ID)
+	tx, err := h.pool.Begin(c.Request.Context())
+	if err != nil {
+		utils.RespondInternalError(c, slog.Default(), "begin task creation", err)
+		return
+	}
+	defer tx.Rollback(c.Request.Context())
+	queries := sqlc.New(tx)
 
 	// Parse optional fields
-	var status sqlc.NullTaskstatus
+	status := sqlc.NullTaskstatus{Taskstatus: stringToTaskStatus("todo"), Valid: true}
 	if req.Status != nil {
 		status = sqlc.NullTaskstatus{
 			Taskstatus: stringToTaskStatus(*req.Status),
@@ -179,7 +186,7 @@ func (h *DashboardItemHandler) CreateTask(c *gin.Context) {
 		}
 	}
 
-	var priority sqlc.NullTaskpriority
+	priority := sqlc.NullTaskpriority{Taskpriority: stringToTaskPriority("medium"), Valid: true}
 	if req.Priority != nil {
 		priority = sqlc.NullTaskpriority{
 			Taskpriority: stringToTaskPriority(*req.Priority),
@@ -189,7 +196,7 @@ func (h *DashboardItemHandler) CreateTask(c *gin.Context) {
 
 	var dueDate pgtype.Timestamp
 	if req.DueDate != nil {
-		if t, err := time.Parse(time.RFC3339, *req.DueDate); err == nil {
+		if t, err := parseTaskDueDate(*req.DueDate); err == nil {
 			dueDate = pgtype.Timestamp{Time: t, Valid: true}
 		}
 	}
@@ -206,6 +213,23 @@ func (h *DashboardItemHandler) CreateTask(c *gin.Context) {
 		}
 	}
 
+	if projectID.Valid {
+		var allowed bool
+		err = tx.QueryRow(c.Request.Context(), `SELECT EXISTS(SELECT 1 FROM projects WHERE id=$1 AND (($2::uuid IS NOT NULL AND workspace_id=$2) OR ($2::uuid IS NULL AND user_id=$3)))`, projectID, func() any {
+			if workspaceScoped {
+				return workspaceID
+			}
+			return nil
+		}(), user.ID).Scan(&allowed)
+		if err != nil {
+			utils.RespondInternalError(c, slog.Default(), "validate task project", err)
+			return
+		}
+		if !allowed {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "Select a project in the current workspace"})
+			return
+		}
+	}
 	task, err := queries.CreateTask(c.Request.Context(), sqlc.CreateTaskParams{
 		UserID:      user.ID,
 		Title:       req.Title,
@@ -219,6 +243,17 @@ func (h *DashboardItemHandler) CreateTask(c *gin.Context) {
 	if err != nil {
 		slog.Default().Error("Failed to create task", "error", err, "user_id", user.ID, "title", req.Title)
 		utils.RespondInternalError(c, slog.Default(), "create task", err)
+		return
+	}
+
+	if workspaceScoped {
+		if _, err = tx.Exec(c.Request.Context(), `UPDATE tasks SET workspace_id=$1 WHERE id=$2`, workspaceID, task.ID); err != nil {
+			utils.RespondInternalError(c, slog.Default(), "save task workspace", err)
+			return
+		}
+	}
+	if err = tx.Commit(c.Request.Context()); err != nil {
+		utils.RespondInternalError(c, slog.Default(), "commit task", err)
 		return
 	}
 
@@ -332,7 +367,7 @@ func (h *DashboardItemHandler) UpdateTask(c *gin.Context) {
 
 	var dueDate pgtype.Timestamp
 	if req.DueDate != nil {
-		if t, err := time.Parse(time.RFC3339, *req.DueDate); err == nil {
+		if t, err := parseTaskDueDate(*req.DueDate); err == nil {
 			dueDate = pgtype.Timestamp{Time: t, Valid: true}
 		}
 	}
@@ -518,4 +553,12 @@ func (h *DashboardItemHandler) DeleteTask(c *gin.Context) {
 	h.invalidateDashboardCache(c, user.ID)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Task deleted"})
+}
+
+// Task forms send calendar dates; API callers may also send RFC3339 timestamps.
+func parseTaskDueDate(value string) (time.Time, error) {
+	if t, err := time.Parse("2006-01-02", value); err == nil {
+		return t, nil
+	}
+	return time.Parse(time.RFC3339, value)
 }
