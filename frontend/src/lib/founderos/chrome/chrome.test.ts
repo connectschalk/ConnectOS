@@ -94,9 +94,9 @@ describe('Sidebar', () => {
 });
 
 describe('Topbar', () => {
-	it('breadcrumb: founder-os / <view>', () => {
+	it('breadcrumb: connectos / <view>', () => {
 		const { container } = render(Topbar, { pathname: '/os/integrations' });
-		expect(container.querySelector('[data-part="crumb"]')!.textContent).toMatch(/founder-os\s*\/\s*connections/);
+		expect(container.querySelector('[data-part="crumb"]')!.textContent).toMatch(/connectos\s*\/\s*connections/);
 	});
 
 	it('breadcrumb labels follow FounderOS v1, with Brain for the knowledge view', () => {

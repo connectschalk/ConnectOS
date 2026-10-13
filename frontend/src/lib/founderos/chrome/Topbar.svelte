@@ -15,7 +15,7 @@
 
 <div class="bn-topbar sticky top-0 z-30 flex h-[52px] shrink-0 items-center gap-3.5 border-b px-6 backdrop-blur">
 	<div data-part="crumb" class="bn-dim flex items-center gap-[7px] whitespace-nowrap font-mono text-[11px] tracking-[0.04em]">
-		<span>founder-os</span>
+		<span>connectos</span>
 		<span class="opacity-45">/</span>
 		<span class="bn-text">{here}</span>
 	</div>

@@ -67,8 +67,8 @@ describe('/os layout: transitions, loading, toasts, title (FounderOS v1 app shel
 		expect(layout.match(/<Toaster\b/g)).toHaveLength(1);
 	});
 
-	it('the tab reads FOUNDER OS with the OS emblem as its icon', () => {
-		expect(layout).toMatch(/<title>FOUNDER OS<\/title>/);
+	it('the tab reads ConnectOS with the OS emblem as its icon', () => {
+		expect(layout).toMatch(/<title>ConnectOS<\/title>/);
 		expect(layout).toMatch(/<link rel="icon" type="image\/png" sizes="128x128" href=\{osIcon\}/);
 		expect(layout).toContain("import osIcon from '$lib/founderos/chrome/os-icon.png'");
 	});

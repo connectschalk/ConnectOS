@@ -15,7 +15,7 @@ CYAN  := \033[36m
 
 .PHONY: help
 help: ## Show this help message
-	@printf '$(BOLD)FounderOS — available targets:$(RESET)\n\n'
+	@printf '$(BOLD)ConnectOS — available targets:$(RESET)\n\n'
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*##/ { printf "  $(CYAN)%-20s$(RESET) %s\n", $$1, $$2 }' $(MAKEFILE_LIST)
 	@printf '\n'
 

@@ -86,7 +86,7 @@
 				}
 			} else {
 				loading = false;
-				// Founder OS opens on its operator console; BusinessOS's own
+				// ConnectOS opens on its operator console; BusinessOS's own
 				// onboarding wizard and desktop stay reachable from the sidebar.
 				goto(redirectTo || '/os');
 			}
@@ -123,7 +123,7 @@
 				</svg>
 			</div>
 			<span class="auth-logo-text">
-				<span class="auth-logo-word">FOUNDER</span><span class="auth-logo-suffix">OS</span>
+				<span class="auth-logo-word">ConnectOS</span>
 			</span>
 		</div>
 
@@ -148,7 +148,7 @@
 				</div>
 			{:else}
 				<h1 class="auth-title">Sign in</h1>
-				<p class="auth-subtitle">Welcome back to Founder OS</p>
+				<p class="auth-subtitle">Welcome back to ConnectOS</p>
 			{/if}
 		</div>
 

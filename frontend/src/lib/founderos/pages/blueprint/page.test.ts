@@ -78,10 +78,10 @@ describe('/os/blueprint', () => {
 		expect(legend).toContain('service');
 		expect(legend).not.toContain('container');
 		expect(legend).not.toContain('dev tool');
-		// v1 names the running OS and the ask bar "Founder OS"
-		expect(container.textContent).toContain('Ask Founder OS');
+		// v1 names the running OS and the ask bar "ConnectOS"
+		expect(container.textContent).toContain('Ask ConnectOS');
 		expect(container.textContent).not.toMatch(/FounderOS v1/);
-		expect(container.querySelector('[data-id="k-founderos"]')?.textContent).toContain('Founder OS');
+		expect(container.querySelector('[data-id="k-founderos"]')?.textContent).toContain('ConnectOS');
 	});
 
 	it('Everything opens every group so the agents are drawn', async () => {
@@ -119,7 +119,7 @@ describe('/os/blueprint', () => {
 		const input = container.querySelector('.bh-search-panel input') as HTMLInputElement;
 		await fireEvent.input(input, { target: { value: 'slack' } });
 		await waitFor(() => expect(container.querySelector('.bh-sr .t')?.textContent).toBe('Slack'));
-		expect(container.querySelector('.bh-sr .k')?.textContent).toBe('Founder OS › Connectors');
+		expect(container.querySelector('.bh-sr .k')?.textContent).toBe('ConnectOS › Connectors');
 	});
 
 	it('the ask bar looks like production (live input, chips, no standing banner) and answers a short honest line', async () => {

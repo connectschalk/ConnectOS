@@ -44,8 +44,8 @@ export function founderosHrefsFor(settings: Record<string, unknown>): Set<string
 const card = (m: (typeof FOUNDEROS)[number]) => ({ href: m.href, label: m.label, desc: DESC[m.href] ?? '', live: true });
 
 export const FOUNDEROS_COMMAND_GROUP = {
-	label: 'FounderOS',
-	purpose: 'The FounderOS operator views, reading your connectors and the Optimal Engine.',
+	label: 'ConnectOS',
+	purpose: 'The ConnectOS operator views, reading your connectors and the Optimal Engine.',
 	modules: FOUNDEROS.map(card)
 };
 

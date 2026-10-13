@@ -32,7 +32,7 @@ beforeEach(() => {
 describe('Sidebar look', () => {
 	it('the swirl emblem and the v3 · Operator Mode line, never a boxed letter', () => {
 		const { container } = render(Sidebar, { pathname: '/os' });
-		const mark = container.querySelector('aside img[alt="Founder OS"]')!;
+		const mark = container.querySelector('aside img[alt="ConnectOS"]')!;
 		expect(mark.getAttribute('src')).toMatch(/os-emblem\.png/);
 		expect(mark.getAttribute('width')).toBe('34');
 		expect(container.querySelector('.bn-mark')).toBeNull();
@@ -42,7 +42,7 @@ describe('Sidebar look', () => {
 	it('collapsed, the emblem alone carries the identity at 30px', async () => {
 		const { container } = render(Sidebar, { pathname: '/os' });
 		await fireEvent.click(screen.getByRole('button', { name: /collapse sidebar/i }));
-		expect(container.querySelector('aside img[alt="Founder OS"]')!.getAttribute('width')).toBe('30');
+		expect(container.querySelector('aside img[alt="ConnectOS"]')!.getAttribute('width')).toBe('30');
 	});
 	it('nav rows are 6px row lenses; the active one wears the accent line', () => {
 		const { container } = render(Sidebar, { pathname: '/os/comms' });
@@ -84,7 +84,7 @@ describe('Topbar look', () => {
 		expect(cls(search)).toContain('rounded-[6px]');
 		expect(cls(agent)).toContain('rounded-[6px]');
 		expect(theme.textContent!.trim()).toBe('');
-		const mark = container.querySelector('img[alt="Founder OS"]')!;
+		const mark = container.querySelector('img[alt="ConnectOS"]')!;
 		expect(mark.getAttribute('width')).toBe('26');
 		expect(agent.compareDocumentPosition(mark) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 	});

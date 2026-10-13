@@ -89,7 +89,7 @@
 		<div class="bh-ask-row">
 			<button type="button" class="bn-pressable bh-ask-scope" title={scope ? 'Clear selection (esc)' : 'Ask about the whole system'} onclick={() => (scope ? onclearscope() : inputEl?.focus())}>
 				<i class="sw"></i>
-				<span>{scope ? `Ask about ${scope.name}` : 'Ask Founder OS'}</span>
+				<span>{scope ? `Ask about ${scope.name}` : 'Ask ConnectOS'}</span>
 			</button>
 			<input
 				bind:this={inputEl}

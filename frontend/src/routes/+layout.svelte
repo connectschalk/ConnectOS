@@ -32,7 +32,7 @@
 </script>
 
 <svelte:head>
-	<title>Business OS</title>
+	<title>ConnectOS</title>
 	<meta name="description" content="Your internal command center" />
 </svelte:head>
 

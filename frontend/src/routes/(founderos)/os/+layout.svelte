@@ -34,7 +34,7 @@
 	let { children } = $props();
 
 	let live = $state<{ up: number; total: number } | null>(null);
-	// The owner gate said this account has no Founder OS yet: show the setup panel.
+	// The owner gate said this account has no ConnectOS yet: show the setup panel.
 	let setup = $state(false);
 	let host = $state<string | null>(null);
 	// Top-level Electron window on macOS only; a desktop window's iframe has none.
@@ -74,7 +74,8 @@
 </script>
 
 <svelte:head>
-	<title>FOUNDER OS</title>
+	<title>ConnectOS</title>
+	<meta name="description" content="Personal and business operating system for managing companies, projects, finance, sales, knowledge and AI agents." />
 	<link rel="icon" type="image/png" sizes="128x128" href={osIcon} data-founderos />
 </svelte:head>
 

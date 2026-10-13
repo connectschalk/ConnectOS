@@ -11,12 +11,12 @@ import CohortModal from './chrome/CohortModal.svelte';
 // someone runs FounderOS, plus a permanent footer CTA under every view.
 
 describe('cohort invite constants', () => {
-	it('points at founderos.sh over https', () => {
-		expect(COHORT_URL).toBe('https://founderos.sh');
+	it('points at Setup guide over https', () => {
+		expect(COHORT_URL).toBe('https://github.com/connectschalk/ConnectOS/blob/codex/connectos-personalization/docs/CONNECTOS.md');
 	});
 	it('carries the exact footer CTA line', () => {
 		expect(COHORT_CTA).toBe(
-			'Want help setting this up? Go to the FounderOS cohort to learn how to build the entire thing end-to-end and get it into production.'
+			'Start with your companies and projects, then connect the services you want to use. The setup guide explains where your data belongs.'
 		);
 	});
 	it('namespaces its storage key', () => {
@@ -39,14 +39,14 @@ describe('shouldShowCohortModal', () => {
 });
 
 describe('CohortBanner', () => {
-	it('is a footer link to founderos.sh carrying the CTA', () => {
+	it('is a footer link to Setup guide carrying the CTA', () => {
 		const { container } = render(CohortBanner);
 		const footer = container.querySelector('footer')!;
 		expect(footer.textContent).toContain(COHORT_CTA);
 		const a = footer.querySelector('a')!;
 		expect(a.getAttribute('href')).toBe(COHORT_URL);
 		expect(a.getAttribute('rel')).toBe('noreferrer');
-		expect(a.textContent).toContain('founderos.sh');
+		expect(a.textContent).toContain('Setup guide');
 	});
 });
 
@@ -56,7 +56,7 @@ describe('CohortModal', () => {
 	it('greets a fresh visitor on Home and remembers the dismissal', async () => {
 		render(CohortModal, { pathname: '/os' });
 		expect(screen.getByRole('dialog')).toBeTruthy();
-		expect(screen.getByText('Build this for real')).toBeTruthy();
+		expect(screen.getByText('Make ConnectOS your own')).toBeTruthy();
 		await fireEvent.click(screen.getByRole('button', { name: 'Keep exploring' }));
 		expect(screen.queryByRole('dialog')).toBeNull();
 		expect(localStorage.getItem(COHORT_STORAGE_KEY)).toBe(COHORT_SEEN);

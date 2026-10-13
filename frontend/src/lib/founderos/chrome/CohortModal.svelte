@@ -53,22 +53,22 @@
 			aria-labelledby="cohort-modal-title"
 		>
 			<div class="cohort-head flex items-start justify-between px-5 py-3.5">
-				<div class="bn-eyebrow bn-dim flex items-center gap-2 pt-1 font-mono text-[9.5px] uppercase tracking-[0.32em]">FounderOS Cohort</div>
+				<div class="bn-eyebrow bn-dim flex items-center gap-2 pt-1 font-mono text-[9.5px] uppercase tracking-[0.32em]">ConnectOS setup</div>
 				<button type="button" onclick={dismiss} aria-label="Close" class="cohort-btn bn-pressable bn-muted grid h-7 w-7 shrink-0 place-items-center">
 					<X class="h-3.5 w-3.5" />
 				</button>
 			</div>
 			<div class="px-5 py-5">
-				<h2 id="cohort-modal-title" class="bn-text text-[20px] font-bold uppercase leading-[1.15] tracking-[0.06em]">Build this for real</h2>
+				<h2 id="cohort-modal-title" class="bn-text text-[20px] font-bold uppercase leading-[1.15] tracking-[0.06em]">Make ConnectOS your own</h2>
 				<p class="bn-muted mt-3 font-mono text-[12px] leading-relaxed">
-					You're running the FounderOS demo locally — the operator console, the agent roster, the knowledge core, all of it.
+					You're running ConnectOS locally — the operator console, the agent roster, the knowledge core, all of it.
 				</p>
 				<p class="bn-muted mt-3 font-mono text-[12px] leading-relaxed">
-					Want help setting this up? Go to the FounderOS cohort to learn how to build the entire thing end-to-end and get it into production.
+					Start with your companies and projects, then connect the services you want to use. The setup guide explains where your data belongs.
 				</p>
 				<div class="mt-6 flex flex-col gap-2 sm:flex-row sm:items-center">
 					<a href={COHORT_URL} target="_blank" rel="noreferrer" onclick={dismiss} class="cohort-cta inline-flex items-center justify-center gap-1.5 px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em]">
-						Join the cohort — founderos.sh
+						Personalize ConnectOS
 						<ArrowUpRight class="h-3 w-3" />
 					</a>
 					<button type="button" onclick={dismiss} class="cohort-btn bn-pressable bn-muted px-4 py-2.5 font-mono text-[10px] font-bold uppercase tracking-[0.18em]">Keep exploring</button>

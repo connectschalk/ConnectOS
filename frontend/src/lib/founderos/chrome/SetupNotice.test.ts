@@ -5,7 +5,7 @@ import { needsSetup } from './chrome';
 import SetupNotice from './SetupNotice.svelte';
 
 describe('needsSetup', () => {
-	it('is the owner gate saying this account has no Founder OS yet', () => {
+	it('is the owner gate saying this account has no ConnectOS yet', () => {
 		expect(needsSetup(new FounderosApiError(403, 'x', { setup: true, error: 'run make demo' }))).toBe(true);
 	});
 	it('ignores every other failure', () => {
@@ -16,9 +16,9 @@ describe('needsSetup', () => {
 });
 
 describe('SetupNotice', () => {
-	it('names the one command that sets Founder OS up for this account', () => {
+	it('names the one command that sets ConnectOS up for this account', () => {
 		render(SetupNotice, { email: 'sam@vantage.example' });
-		expect(screen.getByRole('heading').textContent).toMatch(/set up founder os/i);
+		expect(screen.getByRole('heading').textContent).toMatch(/set up connectos/i);
 		expect(screen.getByText('make demo OWNER=sam@vantage.example')).toBeTruthy();
 	});
 });

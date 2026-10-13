@@ -8,11 +8,11 @@
  */
 
 /** Where both placements send people. */
-export const COHORT_URL = 'https://founderos.sh';
+export const COHORT_URL = 'https://github.com/connectschalk/ConnectOS/blob/codex/connectos-personalization/docs/CONNECTOS.md';
 
 /** The line that sits at the bottom of every page. */
 export const COHORT_CTA =
-	'Want help setting this up? Go to the FounderOS cohort to learn how to build the entire thing end-to-end and get it into production.';
+	'Start with your companies and projects, then connect the services you want to use. The setup guide explains where your data belongs.';
 
 /** localStorage flag, set once the welcome pop-up has been dismissed. */
 export const COHORT_STORAGE_KEY = 'founderos-cohort-invite';

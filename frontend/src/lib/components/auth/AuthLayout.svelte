@@ -123,8 +123,7 @@
 			<!-- Logo & Tagline with typewriter -->
 			<div class="relative z-10" in:fly={{ y: -20, duration: 500 }}>
 				<div class="flex items-baseline gap-0.5 mb-6">
-					<span class="text-white text-3xl font-extrabold tracking-[0.2em] font-mono glitch-text-white" data-text="FOUNDER">FOUNDER</span>
-					<span class="text-white/40 text-2xl font-light font-mono">OS</span>
+					<span class="text-white text-3xl font-extrabold tracking-[0.2em] font-mono glitch-text-white" data-text="ConnectOS">ConnectOS</span>
 				</div>
 				<div class="font-mono text-gray-500 text-sm space-y-1">
 					<p class="flex items-center">
@@ -281,8 +280,7 @@
 			<!-- Mobile Logo -->
 			<div class="lg:hidden flex items-baseline gap-0.5 mb-10 justify-center">
 				<a href="/" class="flex items-baseline gap-0.5 hover:opacity-70 transition-opacity">
-					<span class="text-black text-2xl font-extrabold tracking-[0.15em] font-mono">FOUNDER</span>
-					<span class="text-black/30 text-xl font-light font-mono">OS</span>
+					<span class="text-black text-2xl font-extrabold tracking-[0.15em] font-mono">ConnectOS</span>
 				</a>
 			</div>
 

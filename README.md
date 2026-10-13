@@ -1,23 +1,21 @@
-# Founder OS
+# ConnectOS
 
-**A personal operating system for a single person company: a command center
-that runs your business as a set of AI-assisted "departments."**
+**Personal and business operating system for managing companies, projects, finance, sales, knowledge and AI agents.**
+
+Start with the [ConnectOS setup and personalization guide](docs/CONNECTOS.md).
 
 Built for whoever is holding the whole thing together: a freelancer, a
 solopreneur, a solo founder, or a small team where one person still runs point.
 You set the direction, AI agents cover the departments, and any employees you do
 have plug into the same board.
 
-Founder OS turns the tabs, tools and mental overhead of running that business
+ConnectOS turns the tabs, tools and mental overhead of running that business
 into one screen: unified comms, a client funnel, social growth, finances, a
 knowledge graph, and a roster of named AI agents that each own a real job.
 
-> Want to build your own, live, with guidance? That's what the cohort is for:
-> [founderos.sh](https://founderos.sh)
-
 ---
 
-## v2: Founder OS on BusinessOS
+## ConnectOS on BusinessOS
 
 Founder OS v1 was a Next.js + SQLite app. v2 keeps the same operator UI and runs
 it on the [BusinessOS](https://github.com/Miosa-osa/BusinessOS) stack:
@@ -56,7 +54,7 @@ Then:
 BUSINESSOS_HEADLESS=1 make dev-local   # Postgres, Redis, Optimal Engine, backend, frontend
                                        # (drop BUSINESSOS_HEADLESS=1 to also open the desktop app)
 open http://localhost:5273/register    # create your local account
-make demo OWNER=you@example.com        # Founder OS workspaces + the demo data
+make demo OWNER=you@example.com        # sample workspaces + demo data
 open http://localhost:5273/os          # the operator console
 ```
 

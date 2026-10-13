@@ -9,11 +9,11 @@
 <footer class="cohort mt-14 pt-5">
 	<div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
 		<div class="min-w-0">
-			<div class="bn-eyebrow bn-dim mb-1.5 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.32em]">FounderOS Cohort</div>
+			<div class="bn-eyebrow bn-dim mb-1.5 flex items-center gap-2 font-mono text-[9.5px] uppercase tracking-[0.32em]">ConnectOS setup</div>
 			<p class="bn-muted max-w-[70ch] font-mono text-[11.5px] leading-relaxed">{COHORT_CTA}</p>
 		</div>
 		<a href={COHORT_URL} target="_blank" rel="noreferrer" class="cohort-link bn-text inline-flex shrink-0 items-center gap-1.5 self-start whitespace-nowrap px-3 py-2 font-mono text-[10px] font-bold uppercase tracking-[0.18em] sm:self-auto">
-			founderos.sh
+			Setup guide
 			<ArrowUpRight class="h-3 w-3" />
 		</a>
 	</div>

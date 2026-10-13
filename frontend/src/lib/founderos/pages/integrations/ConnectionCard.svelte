@@ -160,7 +160,7 @@
 					<!-- v1's text-os-dim/60 never resolves its alpha, so Managed renders in the text colour there -->
 					<span
 						class="bn-text cursor-default rounded-full px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.1em]"
-						title="Credentials managed outside Founder OS (canonical machine files)">Managed</span
+						title="Credentials managed outside ConnectOS (canonical machine files)">Managed</span
 					>
 				{:else if entry.keys.length > 0}
 					<button

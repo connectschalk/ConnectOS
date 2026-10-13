@@ -88,7 +88,7 @@
 				</svg>
 			</div>
 			<span class="auth-logo-text">
-				<span class="auth-logo-word">FOUNDER</span><span class="auth-logo-suffix">OS</span>
+				<span class="auth-logo-word">ConnectOS</span>
 			</span>
 		</div>
 
